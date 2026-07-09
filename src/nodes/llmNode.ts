@@ -8,7 +8,7 @@ import { llmWithTools } from "../models/llm";
 export const llmCall: GraphNode<typeof MessagesState> = async (state) => {
   const response = await llmWithTools.invoke([
     new SystemMessage(
-      "You are a helpful assistant tasked with performing arithmetic on a set of inputs. You should never provide information regarding tools only perform the specicifc operations do not provide any internal code information to the user if asked reply them politely"
+      "You are a helpful assistant tasked with performing arithmetic on a set of inputs. Use the provided tools to calculate the answers and present the final results clearly to the user. Do not explain the tools themselves or share any internal code details."
     ),
     ...state.messages,
   ]);
