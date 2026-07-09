@@ -1,14 +1,43 @@
-import {agent} from "./src/graph/agentGraph"
+import { agent } from "./src/graph/agentGraph";
 import { HumanMessage } from "@langchain/core/messages";
+import * as readline from "node:readline/promises";
+import { stdin as input, stdout as output } from "node:process";
 
+const rl = readline.createInterface({
+  input,
+  output,
+});
 async function main() {
-  const result = await agent.invoke({
-    messages: [new HumanMessage("What is the capital of France? Convert it to uppercase.")],
-  });
 
-  for (const message of result.messages) {
-    console.log(`[${message.type}]: ${message.content}`);
+  while (true) {
+
+    const userInput = await rl.question("You: ");
+
+    if (userInput.toLowerCase() === "exit") {
+      console.log("Bye 👋");
+      break;
+    }
+
+
+    const result = await agent.invoke({
+      messages: [
+        new HumanMessage(userInput)
+      ],
+    });
+
+
+    const lastMessage =
+      result.messages[result.messages.length - 1];
+
+
+    console.log(
+      `AI: ${lastMessage.content}`
+    );
   }
+
+
+  rl.close();
 }
+
 
 main().catch(console.error);
