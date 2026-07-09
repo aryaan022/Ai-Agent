@@ -24,7 +24,7 @@ export const guardNode: GraphNode<typeof MessagesState> = async (state)=>{
         {
           role:"assistant",
           content:
-          "I cannot share internal implementation details."
+          "Ahmmm! becoming oversmart :)) Nice Try :) but I cannot share internal implementation details."
         }
       ]
     };
