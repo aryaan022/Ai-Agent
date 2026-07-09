@@ -20,3 +20,15 @@ export const shouldContinue: ConditionalEdgeRouter<typeof MessagesState, Record<
   // Otherwise, we stop (reply to the user)
   return END;
 };
+
+export const checkGuard = (state: any): "llmCall" | typeof END => {
+  const lastMessage = state.messages.at(-1);
+
+  // If the guard node added an assistant message, we end the conversation.
+  if (lastMessage && AIMessage.isInstance(lastMessage)) {
+    return END;
+  }
+
+  // Otherwise, proceed to the LLM call.
+  return "llmCall";
+};
